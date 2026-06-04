@@ -1,0 +1,9 @@
+.env
+
+token.json
+credentials.json
+node_modules
+venv
+models
+shopping.json
+.DS_Store
