@@ -2,17 +2,17 @@ import { agregarItem, verLista } from './shopping.js'
 import { agregarEvento, verEventos, eliminarEvento } from './calendar.js'
 export async function executeTool(name, args) {
     switch (name) {
-        case 'agregar_lista_compras':
+        case 'add_shopping_item':
             return agregarItem(args.item)
-        case 'ver_lista_compras':
+        case 'get_shopping_list':
             return verLista()
-        case 'agregar_evento_calendario':
+        case 'add_calendar_event':
             return agregarEvento(args)
-        case 'ver_eventos_calendario':
+        case 'list_calendar_events':
             return verEventos(args)
-        case 'eliminar_evento_calendario':
+        case 'delete_calendar_event':
             return eliminarEvento(args)
         default:
-            return 'Tool no reconocida.'
+            return 'Unknown tool.'
     }
 }

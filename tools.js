@@ -2,8 +2,8 @@ export const tools = [
     {
         type: 'function',
         function: {
-            name: 'agregar_lista_compras',
-            description: 'Agrega un item a la lista de compras',
+            name: 'add_shopping_item',
+            description: 'Add an item to the shopping list',
             parameters: {
                 type: 'object',
                 properties: {
@@ -16,7 +16,7 @@ export const tools = [
     {
         type: 'function',
         function: {
-            name: 'ver_lista_compras',
+            name: 'get_shopping_list',
             description: 'Show the current shopping list',
             parameters: { type: 'object', properties: {} },
         },
@@ -24,7 +24,7 @@ export const tools = [
     {
         type: 'function',
         function: {
-            name: 'agregar_evento_calendario',
+            name: 'add_calendar_event',
             description: `Add an event or reminder to Google Calendar.
             If the user mentions tasks related to an event (like getting money, preparing something), add them to the event description instead of creating separate events.`,
             parameters: {
@@ -42,7 +42,7 @@ export const tools = [
     {
         type: 'function',
         function: {
-            name: 'ver_eventos_calendario',
+            name: 'list_calendar_events',
             description: 'Show the next events from Google Calendar',
             parameters: { type: 'object', properties: {} },
         },
@@ -50,7 +50,7 @@ export const tools = [
     {
         type: 'function',
         function: {
-            name: 'eliminar_evento_calendario',
+            name: 'delete_calendar_event',
             description: 'Delete an event from Google Calendar. Generate 2-3 keyword variants separated in an array. For example: "play billiards tonight" → ["billar", "billares", "pool"]',
             parameters: {
                 type: 'object',
