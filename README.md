@@ -99,6 +99,12 @@ After each session, the Python process resumes wake-word detection when Node sen
 | `add_calendar_event` | Create a Google Calendar event |
 | `list_calendar_events` | List upcoming events |
 | `delete_calendar_event` | Delete an event by title/keywords |
+| `list_task_lists` | List all Google Tasks lists (id + title) |
+| `list_tasks` | List tasks in a list (id + title + status) |
+| `create_task_list` | Create a new Google Tasks list |
+| `add_task_to_list` | Add a task (uses `list_id` from `list_task_lists`) |
+| `complete_task` | Mark a task completed (uses `list_id` + `task_id`) |
+| `delete_task` | Delete a task (uses `list_id` + `task_id`) |
 
 ## Project structure
 

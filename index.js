@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import net from 'net'
 import { chat } from './agent.js'
 import { listenAndTranscribe, startSttServer } from './core/speech-to-text.js'
@@ -10,7 +11,13 @@ async function handleWakeWord(socket) {
     console.log('🎤 Wake word detectado!')
 
     while (true) {
-        const texto = await listenAndTranscribe({ maxSilenceSeconds })
+        let texto
+        try {
+            texto = await listenAndTranscribe({ maxSilenceSeconds })
+        } catch (err) {
+            console.error('\n❌ Error de transcripción:', err.message)
+            break
+        }
         if (!texto || texto.trim() === '') break
 
         console.log(`\nTú: ${texto}`)

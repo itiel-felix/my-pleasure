@@ -33,6 +33,7 @@ const systemPrompt = {
 
 const META_DEFAULTS = { question: false, end: false }
 
+
 const processReply = (reply) => {
     const meta = [...reply.matchAll(/<meta>(.*?)<\/meta>/g)].reduce(
         (acc, m) => ({ ...acc, ...JSON.parse(m[1]) }),
@@ -42,6 +43,10 @@ const processReply = (reply) => {
     return { reply: replyLimpio, isQuestion: !!meta.question, hasEnded: !!meta.end }
 }
 
+
+const assistantReply = () => {
+
+}
 export async function chat(userMessage) {
     memory.push({ role: 'user', content: userMessage })
 
@@ -59,10 +64,13 @@ export async function chat(userMessage) {
     const llmWillUseTool = message.tool_calls && message.tool_calls.length > 0
     memory.push(message)
     if (llmWillUseTool) {
+        console.log('llmWillUseTool', llmWillUseTool)
 
         for (const toolCall of message.tool_calls) {
             const args = JSON.parse(toolCall.function.arguments)
+            console.log("Executing tool", toolCall.function.name, args)
             const result = await executeTool(toolCall.function.name, args)
+            console.log("Tool result", result)
             memory.push({ role: 'tool', tool_call_id: toolCall.id, content: result })
         }
 

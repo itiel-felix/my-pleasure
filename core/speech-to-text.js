@@ -58,10 +58,7 @@ function ensureSttServer() {
         sttProcess = spawn(python, [script, '--server'], {
             cwd: root,
             stdio: ['pipe', 'pipe', 'pipe'],
-            env: {
-                ...process.env,
-                INPUT_DEVICE_INDEX: process.env.INPUT_DEVICE_INDEX ?? '4',
-            },
+            env: { ...process.env },
         })
 
         sttProcess.stdout.on('data', (chunk) => {

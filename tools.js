@@ -61,4 +61,85 @@ export const tools = [
             },
         },
     },
+    {
+        type: 'function',
+        function: {
+            name: 'list_task_lists',
+            description: 'List all Google Tasks lists with their ids. Call this before other task tools when the user refers to a list by name, so you can pick the correct list_id.',
+            parameters: { type: 'object', properties: {} },
+        },
+    },
+    {
+        type: 'function',
+        function: {
+            name: 'list_tasks',
+            description: 'List all tasks in a Google Tasks list with their ids and status. Call this before complete_task or delete_task so you can pick the correct task_id.',
+            parameters: {
+                type: 'object',
+                properties: {
+                    list_id: { type: 'string', description: 'Task list id from list_task_lists' },
+                },
+                required: ['list_id'],
+            },
+        },
+    },
+    {
+        type: 'function',
+        function: {
+            name: 'create_task_list',
+            description: 'Create a new Google Tasks list',
+            parameters: {
+                type: 'object',
+                properties: {
+                    list_title: { type: 'string', description: 'Name of the new list' },
+                },
+                required: ['list_title'],
+            },
+        },
+    },
+    {
+        type: 'function',
+        function: {
+            name: 'add_task_to_list',
+            description: 'Add a task to a Google Tasks list. Call list_task_lists first to resolve list_id from the user\'s list name.',
+            parameters: {
+                type: 'object',
+                properties: {
+                    list_id: { type: 'string', description: 'Task list id from list_task_lists' },
+                    task_title: { type: 'string', description: 'Task to add' },
+                },
+                required: ['list_id', 'task_title'],
+            },
+        },
+    },
+    {
+        type: 'function',
+        function: {
+            name: 'complete_task',
+            description: 'Mark a task as completed. Call list_task_lists and list_tasks first to resolve list_id and task_id from what the user said.',
+            parameters: {
+                type: 'object',
+                properties: {
+                    list_id: { type: 'string', description: 'Task list id from list_task_lists' },
+                    task_id: { type: 'string', description: 'Task id from list_tasks' },
+                },
+                required: ['list_id', 'task_id'],
+            },
+        },
+    },
+    {
+        type: 'function',
+        function: {
+            name: 'delete_task',
+            description: 'Delete a task from a Google Tasks list. Call list_task_lists and list_tasks first to resolve list_id and task_id from what the user said.',
+            parameters: {
+                type: 'object',
+                properties: {
+                    list_id: { type: 'string', description: 'Task list id from list_task_lists' },
+                    task_id: { type: 'string', description: 'Task id from list_tasks' },
+                },
+                required: ['list_id', 'task_id'],
+            },
+        },
+    },
 ]

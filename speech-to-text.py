@@ -58,7 +58,11 @@ def record_audio(max_silence_sec: float) -> bytes:
     if device is not None:
         open_kwargs["input_device_index"] = device
 
-    stream = pa.open(**open_kwargs)
+    try:
+        stream = pa.open(**open_kwargs)
+    except OSError as err:
+        hint = f" INPUT_DEVICE_INDEX={device} may be invalid." if device is not None else ""
+        raise OSError(f"{err}.{hint} Run: venv/bin/python list_devices.py") from err
     stream.start_stream()
 
     frames = []
