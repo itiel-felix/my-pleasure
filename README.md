@@ -113,7 +113,6 @@ After each session, the Python process resumes wake-word detection when Node sen
 ├── agent.js              # LLM, session memory, and meta (question / end)
 ├── wake_word.py          # "Hey Jarvis" detection (openWakeWord)
 ├── speech-to-text.py     # Vosk transcription (long-lived process for Node)
-├── core/speech-to-text.js
 ├── tools/                # Shopping list and Google Calendar
 └── models/               # Vosk model (not included in git)
 ```
@@ -122,7 +121,7 @@ After each session, the Python process resumes wake-word detection when Node sen
 
 | Issue | What to check |
 |-------|----------------|
-| `Modelo no encontrado` | Vosk model download and path under `models/` |
+| `Model not found` | Vosk model download and path under `models/` |
 | Wake word not detected | Correct microphone, clear "Hey Jarvis", threshold in `wake_word.py` |
 | No transcription / bad audio | `INPUT_DEVICE_INDEX` and `list_devices.py` |
 | `pyaudio` install error | `brew install portaudio`, then reinstall requirements |
@@ -134,4 +133,4 @@ Listed in `.gitignore`: `.env`, `credentials.json`, `token.json`, `node_modules/
 
 ## License
 
-Personal project. Add a license if you publish it more formally.
+Personal project.
