@@ -11,16 +11,16 @@ import sys
 import pyaudio
 import vosk
 
+from load_env import load_env
+from audio_devices import input_device_index, log_input_device
+
+load_env()
+
 MODEL_PATH = os.environ.get("VOSK_MODEL_PATH", "models/vosk-model-small-es-0.42")
 SAMPLE_RATE = 16000
 CHUNK = 4000
-RMS_THRESHOLD = 500
-MAX_DURATION_SEC = 10
-
-
-def input_device_index():
-    raw = os.environ.get("INPUT_DEVICE_INDEX")
-    return int(raw) if raw not in (None, "") else None
+RMS_THRESHOLD = float(os.environ.get("STT_RMS_THRESHOLD", "500"))
+MAX_DURATION_SEC = float(os.environ.get("STT_MAX_DURATION_SEC", "10"))
 
 
 def load_model():
@@ -111,6 +111,7 @@ def listen_once(model: vosk.Model, max_silence_sec: float, *, emit_status: bool 
 
 
 def server_loop(model: vosk.Model) -> None:
+    log_input_device(prefix="🎤 [STT]", stream=sys.stderr)
     print("READY", flush=True)
     for line in sys.stdin:
         line = line.strip()
@@ -140,6 +141,7 @@ def main() -> None:
     if args.server:
         server_loop(model)
     else:
+        log_input_device(prefix="🎤 [STT]", stream=sys.stderr)
         print(listen_once(model, args.max_silence))
 
 

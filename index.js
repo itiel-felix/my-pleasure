@@ -3,7 +3,8 @@ import net from 'net'
 import { chat } from './agent.js'
 import { listenAndTranscribe, startSttServer } from './core/speech-to-text.js'
 let isProcessing = false
-let maxSilenceSeconds = 1.5
+const defaultMaxSilence = Number(process.env.STT_MAX_SILENCE_SECONDS) || 1.5
+let maxSilenceSeconds = defaultMaxSilence
 async function handleWakeWord(socket) {
     if (isProcessing) return
     isProcessing = true
@@ -27,7 +28,7 @@ async function handleWakeWord(socket) {
 
         const { hasEnded, isQuestion } = await chat(texto)
         if (hasEnded) {
-            maxSilenceSeconds = 1.5
+            maxSilenceSeconds = defaultMaxSilence
             break
         }
         if (isQuestion) maxSilenceSeconds = 5

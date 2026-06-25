@@ -3,6 +3,7 @@ import { agregarEvento, verEventos, eliminarEvento } from './calendar.js'
 import { createTaskList, listTaskLists, listTasks, addTaskToList, completeTask, deleteTask } from './tasks.js'
 
 export async function executeTool(name, args) {
+    console.log('Executing tool', name, args)
     switch (name) {
         case 'add_shopping_item':
             return agregarItem(args.item)

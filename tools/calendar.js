@@ -1,14 +1,22 @@
 import { getCalendarClient } from './google-auth.js'
 
-export async function agregarEvento({ titulo, fecha, hora, descripcion = '' }) {
+export async function agregarEvento({ titulo, fecha, hora, horaFin, descripcion = '' }) {
     const calendar = await getCalendarClient()
 
     const horaEvento = hora || '09:00'
     const fechaHora = new Date(`${fecha}T${horaEvento}:00`)
+    let fechaFin;
+    if (horaFin) {
+        fechaFin = new Date(`${fecha}T${horaFin}:00`)
+    } else {
+        fechaFin = new Date(fechaHora.getTime() + 60 * 60 * 1000) // + 1 hour
+    }
     if (Number.isNaN(fechaHora.getTime())) {
         throw new Error('Fecha u hora inválida. Usa formato YYYY-MM-DD y HH:mm.')
     }
-    const fechaFin = new Date(fechaHora.getTime() + 60 * 60 * 1000) // 1 hora después
+
+    console.log('fechaHora', fechaHora)
+    console.log('fechaFin', fechaFin)
 
     const evento = {
         summary: titulo,

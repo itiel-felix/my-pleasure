@@ -7,3 +7,5 @@ venv
 models
 shopping.json
 .DS_Store
+__pycache__
+prompts

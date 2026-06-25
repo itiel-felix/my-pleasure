@@ -25,14 +25,20 @@ export const tools = [
         type: 'function',
         function: {
             name: 'add_calendar_event',
-            description: `Add an event or reminder to Google Calendar.
-            If the user mentions tasks related to an event (like getting money, preparing something), add them to the event description instead of creating separate events.`,
+            description: `
+            Add an event or reminder to Google Calendar.
+            If the user mentions tasks related to an event (like getting money, preparing something), add them to the event description instead of creating separate events.
+            Given time must be logical. 
+                Example: if the user says "I need to get money for the event", the time should be the time of the event.
+                Example: if the user says "I will go to a party at 10:00", the time should be 10:00 PM unless the user specifies otherwise.
+                Example: If the user says "I will go to supermarket at 10:00", and the call is for tomorrow, its before 10:00 AM the time should be 10:00 AM unless the user specifies otherwise.`,
             parameters: {
                 type: 'object',
                 properties: {
                     titulo: { type: 'string', description: 'Event title' },
                     fecha: { type: 'string', description: 'Date in format YYYY-MM-DD' },
                     hora: { type: 'string', description: 'Time in format HH:MM, optional' },
+                    horaFin: { type: 'string', description: 'Time in format HH:MM, required if hora is provided.' },
                     descripcion: { type: 'string', description: 'Optional event description' },
                 },
                 required: ['titulo', 'fecha'],

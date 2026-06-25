@@ -8,6 +8,13 @@ import openwakeword
 import pyaudio
 from openwakeword.model import Model
 
+from load_env import load_env
+from audio_devices import input_device_index, log_input_device
+
+load_env()
+
+WAKE_WORD_THRESHOLD = float(os.environ.get("WAKE_WORD_THRESHOLD", "0.6"))
+
 openwakeword.utils.download_models()
 
 model = Model(wakeword_models=["hey_jarvis"])
@@ -19,11 +26,6 @@ pa = None
 stream = None
 detecting = True
 stream_lock = threading.Lock()
-
-
-def input_device_index():
-    raw = os.environ.get("INPUT_DEVICE_INDEX")
-    return int(raw) if raw not in (None, "") else None
 
 
 def open_input_stream():
@@ -47,6 +49,7 @@ def open_input_stream():
 
         try:
             stream = pa.open(**open_kwargs)
+            log_input_device(pa, prefix="🎤 [wake word]")
         except OSError as err:
             print(f"\n❌ No se pudo abrir el micrófono: {err}")
             if device is not None:
@@ -105,7 +108,7 @@ while True:
     prediction = model.predict(audio_np)
 
     for key, value in prediction.items():
-        if value > 0.6:
+        if value > WAKE_WORD_THRESHOLD:
             print(f"✅ Wake word detectado! ({value:.2f})")
             detecting = False
             close_input_stream()
